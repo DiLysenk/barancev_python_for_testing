@@ -3,33 +3,34 @@ from selenium.webdriver.common.by import By
 from group import Group
 import unittest
 from application import Application
+import pytest
 
-class test_add_group(unittest.TestCase):
 
+
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
     # Функция инициализации запускает драйвер браузера фикстура
-    def setup_method(self):
-        self.app = Application()
 
 
-      def test_add_group(self):
-        self.open_home_page()
-        self.login(username="admin", password="secret")
-        self.open_groups_page()
-        self.create_group(Group(name_group="buranzev22", header="первый", footer="второй"))
-        self.open_groups_page()
-        self.logout()
+def test_add_group(app):
+    app.open_home_page()
+    app.login(username="admin", password="secret")
+    app.open_groups_page()
+    app.create_group(Group(name_group="buranzev22", header="первый", footer="второй"))
+    app.open_groups_page()
+    app.logout()
 
-    def test_add_empty_group(self):
-        self.open_home_page()
-        self.login(username="admin", password="secret")
-        self.open_groups_page()
-        self.create_group(Group(name_group="", header="", footer=""))
-        self.open_groups_page()
-        self.logout()
+def test_add_empty_group(app):
+    app.open_home_page()
+    app.login(username="admin", password="secret")
+    app.open_groups_page()
+    app.create_group(Group(name_group="", header="", footer=""))
+    app.open_groups_page()
+    app.logout()
 
-    # Функция закрытия
-    def teardown_method(self):
-        self.app.destroy()
 
 
     """ функции для тестов"""
