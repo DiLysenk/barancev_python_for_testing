@@ -1,8 +1,7 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from group import Group
-import unittest
-from application import Application
+
+
+from barancev_python_for_testing.fixture.application import Application
+from barancev_python_for_testing.model.group import Group
 import pytest
 
 
@@ -31,14 +30,3 @@ def test_add_empty_group(app):
     app.open_groups_page()
     app.logout()
 
-
-
-    """ функции для тестов"""
-
-
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
